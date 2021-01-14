@@ -10,6 +10,9 @@ As of its making, I still hadn't learned all fundamentals of Object-Oriented Pro
 which is why some of the code ends up being redundant and unoptimized.
 
 
+If you'd like to try it for yourself, [Builds](https://github.com/Atienn/Personal-Projects/tree/main/Gravitation%20Engine/Builds) holds all published versions of the project. If you want to look at its code, [Assets/Scripts](https://github.com/Atienn/Personal-Projects/tree/main/Gravitation%20Engine/Assets/Scripts) holds all the behaviour scripts used.
+
+
 Developped by Étienne Racine.
 
 If you have any feedback you'd like to share, [send me an email](mailto:e_acine@live.concorida.ca).
