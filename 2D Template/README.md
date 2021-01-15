@@ -6,3 +6,5 @@ It's a basic template for 2D projects. It was made by stripping P1 to its essent
 
 The user can control a player object using the W, A, S and D keys.
 The player object can be teleported to the mouse's position using the SPACE key or any mouse button.
+
+Try it [here](https://atienn.github.io/Personal-Projects/2D%20Template/).

@@ -6,4 +6,7 @@ Made as part of the Creative Computation I (CART 253) coursework.
 This is a platformer game with a focus on speed.
 The goal is to navigate pre-made levels in the shortest amount of time possible.
 
+Play it [here](https://atienn.github.io/Personal-Projects/Project%20Vector/).
+
+
 All music used is royalty-free.

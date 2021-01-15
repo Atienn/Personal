@@ -5,4 +5,7 @@ Made as part of the Creative Computation I (CART 253) coursework.
 
 This is a game about dodging bullets using teleportation and screen wrapping to achieve the highest score.
 
+Play it [here](https://atienn.github.io/Personal-Projects/P1/).
+
+
 All music used is royalty-free. 
