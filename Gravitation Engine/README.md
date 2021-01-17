@@ -6,10 +6,6 @@ Its goal is to let its users develop a general understanding of how massive bodi
 The simulator originally started out as a school project for an astronomy class in late 2019.
 Over the summer of 2020, it was further developped for public use as a passion project.
 
-As of its making, I still hadn't learned all fundamentals of Object-Oriented Programming (namely classes), 
-which is why some of the code ends up being redundant and unoptimized.
-
-
 If you'd like to try it for yourself, [Builds](https://github.com/Atienn/Personal-Projects/tree/main/Gravitation%20Engine/Builds) holds all published versions of the project. If you want to look at its code, [Assets/Scripts](https://github.com/Atienn/Personal-Projects/tree/main/Gravitation%20Engine/Assets/Scripts) holds all the behaviour scripts used.
 
 
