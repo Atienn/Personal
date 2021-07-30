@@ -13,7 +13,7 @@ All music used is royalty-free.
 
 Tracks:
 - [AIRGLOW - Blueshift](https://open.spotify.com/album/08kV4nhdlCBbCWt9fO6AAa?highlight=spotify:track:7Glh11xQGaEbuw1M186WpK)
-- [Floating Anarchy](https://open.spotify.com/album/6ababgJTbXJE7AF78JyQdk)
+- [Floating Anarchy - Cyber Funk](https://open.spotify.com/album/6ababgJTbXJE7AF78JyQdk)
 - [EVA - 失望した](https://open.spotify.com/track/5E4KvUjuwUfyuRIzVQwt7u?si=6a75a92b434345f8)
 - [Aries Beats - Infinity](https://open.spotify.com/track/2kfBEU5s3dqc1RCtaOPuGh?si=5b6faf8f908d420e)
 - [Neon.Deflector - Outpost X](https://open.spotify.com/album/0I1tvrpyiAJylAcEPLQ4uG?highlight=spotify:track:201W6jH0ZKmpihW4q4SzwT)
