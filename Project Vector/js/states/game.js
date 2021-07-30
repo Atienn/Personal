@@ -221,6 +221,7 @@ let GameState =
 
         //Reset the player's position.
         Player.pos.Get(this.currLevel.startPos);
+        Player.lastPos.Get(this.currLevel.startPos);
 
         //Don't carry over any previous velocity.
         Player.vel.Set(0,0);

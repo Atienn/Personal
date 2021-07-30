@@ -49,13 +49,11 @@ let Player =
         if(this.vel.y !== 0) { this.vel.y = misc.moveTowards(this.vel.y, 0, 0.075 * this.vel.y); }
 
         //The position the player had last frame is now thier last position.
-        this.lastPos.x = this.pos.x;
-        this.lastPos.y = this.pos.y;
+        this.lastPos.Get(this.pos);
 
         //Move the player by their current velocity. 
         //With the built-in friction, the max speed is 20 (asymptotic).
-        this.pos.x += this.vel.x;
-        this.pos.y += this.vel.y;
+        this.pos.Add(this.vel);
 
         //Assume the player is mid-air.
         this.state = 0;
@@ -73,66 +71,106 @@ let Player =
 
         //#region Collision Checks
 
-        //Since after a first collision any further ones won't have any effect (for a single frame),
-        //then we don't have to any more collisons one one has happened. -- had a stroke writing this
-        //Sections the horizontal collision check process for horizontal platforms so that it can be halted mid-process.
+        //Since after the first collision any further ones won't have any effect (for one frame),
+        //then we don't have to calculate if any more collisons has happened.
         horizontalCheck:
         {
             //Only check for ground collisions if the player is moving down.
             if(this.vel.y > 0)
             {
-                //For every ground, check if there is collision.
-                for(let i = 0; i < Platform.currG.length; i++)
-                {
-                    //Check for collisions using the player's lower boundaries (bottom-left, bottom-right).
-                    if( Platform.currG[i].collisionCheck(new Vector2D(this.pos.x - 10, this.pos.y + 10), this.vel)
-                        ||
-                        Platform.currG[i].collisionCheck(new Vector2D(this.pos.x + 10, this.pos.y + 10), this.vel) )
-                    {
-                        //Anchor the player to the ground.
-                        this.pos.y = Platform.currG[i].pos - 10;
-                        //Remove any vertical velocity.
-                        this.vel.y = 0.1;
-                        //Switch the player's state and last state to grounded.
-                        this.state = 1;
-                        this.lastState = 1;
-                        //Activate the last state's timer.
-                        this.lastStateTimer = 5;
-                        //Recharge the player's dash.
-                        this.dash = true;
+                //Calculate the positions of the player's boundaries for the current and last frame. 
+                let currPosBL = new Vector2D(this.pos.x - 10, this.pos.y + 10);
+                let currPosBR = new Vector2D(this.pos.x + 10, this.pos.y + 10);
+                let lastPosBL = new Vector2D(this.lastPos.x - 10, this.lastPos.y + 10);
+                let lastPosBR = new Vector2D(this.lastPos.x + 10, this.lastPos.y + 10);
 
-                        //If a collision has happened, then any other ones won't change anything (for this frame).
-                        //Stops the collision check for horizontal platforms until next frame.
-                        break horizontalCheck;
+                //If the horizotal velocity is 0, then the collision check process can be simplified.
+                if(this.pos.x - this.lastPos.x === 0) {
+                    //For every ground, check if there is collision.
+                    for(let i = 0; i < Platform.currG.length; i++)
+                    {
+                        //Check for collisions using the player's lower boundaries (bottom-left, bottom-right).
+                        if( Platform.currG[i].colCheckYSimple(currPosBL, lastPosBL, this.vel)
+                            ||
+                            Platform.currG[i].colCheckYSimple(currPosBR, lastPosBR, this.vel) )
+                        {
+                            //Call the collision event with the platform that triggered it.
+                            this.onGCol(Platform.currG[i].pos);
+
+                            //If a collision has happened, then any other ones won't change anything (for this frame).
+                            //Stops the collision check for horizontal platforms on this frame.
+                            break horizontalCheck;
+                        }
+                    }
+                }
+                else {
+                    //For every ground, check if there is collision.
+                    for(let i = 0; i < Platform.currG.length; i++)
+                    {
+                        //Check for collisions using the player's lower boundaries (bottom-left, bottom-right).
+                        if( Platform.currG[i].collisionCheckY(currPosBL, lastPosBL, this.vel)
+                            ||
+                            Platform.currG[i].collisionCheckY(currPosBR, lastPosBR, this.vel) )
+                        {
+                            //Call the collision event with the platform that triggered it.
+                            this.onGCol(Platform.currG[i].pos);
+
+                            //If a collision has happened, then any other ones won't change anything (for this frame).
+                            //Stops the collision check for horizontal platforms on this frame.
+                            break horizontalCheck;
+                        }
                     }
                 }
             }
-            //Only check for ceiling collision if the player isn't moving down and is moving up.
+            //Only check for ceiling collisions if the player is moving upwards.
             else if (this.vel.y < 0)
             {
-                //For every ceiling, check if there is collision.
-                for(let i = 0; i < Platform.currC.length; i++)
-                {
-                    //Check for collisions using the player's upper boundary (top-left, top-right).
-                    if( Platform.currC[i].collisionCheck(new Vector2D(this.pos.x - 10, this.pos.y - 10), this.vel)
-                        ||
-                        Platform.currC[i].collisionCheck(new Vector2D(this.pos.x + 10, this.pos.y - 10), this.vel) )
-                    {
-                        //Bring the player back to where they collided with the ceiling.
-                        this.pos.y = Platform.currC[i].pos + 10;
-                        //Remove and vertical velocity.
-                        this.vel.y = 0;
+                //Calculate the positions of the player's boundaries for the current and last frame. 
+                let currPosTL = new Vector2D(this.pos.x - 10, this.pos.y - 10);
+                let currPosTR = new Vector2D(this.pos.x + 10, this.pos.y - 10);
+                let lastPosTL = new Vector2D(this.lastPos.x - 10, this.lastPos.y - 10);
+                let lastPosTR = new Vector2D(this.lastPos.x + 10, this.lastPos.y - 10);
 
-                        //If a collision has happened, then any other ones won't change anything (for this frame).
-                        //Stops the collision check for horizontal platforms until next frame.
-                        break horizontalCheck;
-                    }
-                } 
-    
+                //If the horizotal velocity is 0, then the collision check process can be simplified.
+                if(this.pos.x - this.lastPos.x === 0) {
+                    //For every ceiling, check if there is collision.
+                    for(let i = 0; i < Platform.currC.length; i++)
+                    {
+                        //Check for collisions using the player's upper boundary (top-left, top-right).
+                        if( Platform.currC[i].colCheckYSimple(currPosTL, lastPosTL, this.vel)
+                            ||
+                            Platform.currC[i].colCheckYSimple(currPosTR, lastPosTR, this.vel) )
+                        {
+                            //Call the collision event with the platform that triggered it.
+                            this.onTCol(Platform.currC[i].pos);
+
+                            //If a collision has happened, then any other ones won't change anything (for this frame).
+                            //Stops the collision check for horizontal platforms until next frame.
+                            break horizontalCheck;
+                        }
+                    } 
+                }
+                else {
+                    //For every ceiling, check if there is collision.
+                    for(let i = 0; i < Platform.currC.length; i++)
+                    {
+                        //Check for collisions using the player's upper boundary (top-left, top-right).
+                        if( Platform.currC[i].collisionCheckY(currPosTL, lastPosTL, this.vel)
+                            ||
+                            Platform.currC[i].collisionCheckY(currPosTR, lastPosTR, this.vel) )
+                        {
+                            //Call the collision event with the platform that triggered it.
+                            this.onTCol(Platform.currC[i].pos);
+
+                            //If a collision has happened, then any other ones won't change anything (for this frame).
+                            //Stops the collision check for horizontal platforms until next frame.
+                            break horizontalCheck;
+                        }
+                    } 
+                }
             }
             //If the player has no veritcal velocity, no check will be made.
         }
-
 
         //Since after a first collision any further ones won't have any effect (for a single frame),
         //then we don't have to any more collisons one one has happened.
@@ -142,78 +180,101 @@ let Player =
             //Only check for right wall collisions if the player is moving left.
             if(this.vel.x > 0)
             {
-                //For every right wall, check if there is collision.
-                for(let i = 0; i < Platform.currR.length; i++)
-                {
-                    //Check for collisions using the player's right boundary (top-right, bottom-right).
-                    if( Platform.currR[i].collisionCheck(new Vector2D(this.pos.x + 10, this.pos.y - 10), this.vel)
-                        ||
-                        Platform.currR[i].collisionCheck(new Vector2D(this.pos.x + 10, this.pos.y + 10), this.vel) )
+                //Calculate the positions of the player's boundaries for the current and last frame. 
+                let currPosRT = new Vector2D(this.pos.x + 10, this.pos.y - 10);
+                let currPosRB = new Vector2D(this.pos.x + 10, this.pos.y + 10);
+                let lastPosRT = new Vector2D(this.lastPos.x + 10, this.lastPos.y - 10);
+                let lastPosRB = new Vector2D(this.lastPos.x + 10, this.lastPos.y + 10);
+
+                //If the vertical velocity is 0, then the collision check process can be simplified.
+                if(this.pos.y - this.lastPos.y === 0) {
+                    //For every right wall, check if there is collision.
+                    for(let i = 0; i < Platform.currR.length; i++)
                     {
-                        //Anchor the player to the wall.
-                        this.pos.x = Platform.currR[i].pos - 10;
-                        //Keep the player on the wall with a small velocity to the right.
-                        this.vel.x = 1;
+                        //Check for collisions using the player's right boundary (top-right, bottom-right).
+                        if( Platform.currR[i].colCheckXSimple(currPosRT, lastPosRT)
+                            ||
+                            Platform.currR[i].colCheckXSimple(currPosRB, lastPosRB) )
+                        {
+                            //Call the collision event with the platform that triggered it.
+                            this.onRCol(Platform.currR[i].pos);
 
-                        //Switch the player's state and last state to wall-sliding (right).
-                        this.state = 3;
-                        this.lastState = 3;
-                        //Activate the last state's timer. (Wall-jumping can be unintuative, so an extra 3 frames are given.)
-                        this.lastStateTimer = 8;
-
-                        //Recharge the player's dash.
-                        this.dash = true;
-                        //Set the player's desired direction away from the wall.
-                        this.dir.x--;
-
-                        //Make the player face left.
-                        this.oritentation = false;
-
-                        //If a collision has happened, then any other ones won't change anything (for this frame).
-                        //Stops the collision check for horizontal platforms until next frame.
-                        break verticalCheck;
+                            //If a collision has happened, then any other ones won't change anything (for this frame).
+                            //Stops the collision check for horizontal platforms until next frame.
+                            break verticalCheck;
+                        }
                     }
                 }
+                else {
+                    //For every right wall, check if there is collision.
+                    for(let i = 0; i < Platform.currR.length; i++)
+                    {
+                        //Check for collisions using the player's right boundary (top-right, bottom-right).
+                        if( Platform.currR[i].collisionCheckX(currPosRT, lastPosRT)
+                            ||
+                            Platform.currR[i].collisionCheckX(currPosRB, lastPosRB) )
+                        {
+                            //Call the collision event with the platform that triggered it.
+                            this.onRCol(Platform.currR[i].pos);
+
+                            //If a collision has happened, then any other ones won't change anything (for this frame).
+                            //Stops the collision check for horizontal platforms until next frame.
+                            break verticalCheck;
+                        }
+                    }
+                }
+
             }
             //Only check for left wall collision if the player isn't moving right and is moving left.
             else if(this.vel.x < 0)
             {
-                //For every left wall, check if there is collision.
-                for(let i = 0; i < Platform.currL.length; i++)
-                {
-                    //Check for collisions using the player's right boundary (top-left, bottom-left).
-                    if( Platform.currL[i].collisionCheck(new Vector2D(this.pos.x - 10, this.pos.y - 10), this.vel)
-                        ||
-                        Platform.currL[i].collisionCheck(new Vector2D(this.pos.x - 10, this.pos.y + 10), this.vel) )
+                //Calculate the positions of the player's boundaries for the current and last frame. 
+                let currPosLT = new Vector2D(this.pos.x - 10, this.pos.y - 10);
+                let currPosLB = new Vector2D(this.pos.x - 10, this.pos.y + 10);
+                let lastPosLT = new Vector2D(this.lastPos.x - 10, this.lastPos.y - 10);
+                let lastPosLB = new Vector2D(this.lastPos.x - 10, this.lastPos.y + 10);
+
+                //If the vertical velocity is 0, then the collision check process can be simplified.
+                if(this.pos.y - this.lastPos.y === 0) {
+                    //For every left wall, check if there is collision.
+                    for(let i = 0; i < Platform.currL.length; i++)
                     {
-                        //Anchor the player to the wall.
-                        this.pos.x = Platform.currL[i].pos + 10;
-                        //Keep the player on the wall with a small velocity to the left.
-                        this.vel.x = -1;
+                        //Check for collisions using the player's right boundary (top-left, bottom-left).
+                        if( Platform.currL[i].colCheckXSimple(currPosLT, lastPosLT)
+                            ||
+                            Platform.currL[i].colCheckXSimple(currPosLB, lastPosLB) )
+                        {
+                            //Call the collision event with the platform that triggered it.
+                            this.onLCol(Platform.currL[i].pos);
 
-                        //Switch the player's state and last state to wall-sliding (left).
-                        this.state = 2;
-                        this.lastState = 2;
-                        //Activate the last state's timer. (Wall-jumping can be unintuative, so an extra 3 frames are given.)
-                        this.lastStateTimer = 8;
-
-                        //Recharge the player's dash.
-                        this.dash = true;
-                        //Set the player's desired direction away from the wall.
-                        this.dir.x++;
-
-                        //Make the player face right.
-                        this.oritentation = true;
-
-                        //If a collision has happened, then any other ones won't change anything (for this frame).
-                        //Stops the collision check for horizontal platforms until next frame.
-                        break verticalCheck;
+                            //If a collision has happened, then any other ones won't change anything (for this frame).
+                            //Stops the collision check for horizontal platforms until next frame.
+                            break verticalCheck;
+                        }
                     }
                 }
+                else {
+                    //For every left wall, check if there is collision.
+                    for(let i = 0; i < Platform.currL.length; i++)
+                    {
+                        //Check for collisions using the player's right boundary (top-left, bottom-left).
+                        if( Platform.currL[i].collisionCheckX(currPosLT, lastPosLT)
+                            ||
+                            Platform.currL[i].collisionCheckX(currPosLB, lastPosLB) )
+                        {
+                            //Call the collision event with the platform that triggered it.
+                            this.onLCol(Platform.currL[i].pos);
+
+                            //If a collision has happened, then any other ones won't change anything (for this frame).
+                            //Stops the collision check for horizontal platforms until next frame.
+                            break verticalCheck;
+                        }
+                    }
+                }
+
             }
             //If the player has no vertical velocity, no check will be made.
         }
-
 
         //#endregion
     
@@ -360,11 +421,12 @@ let Player =
         this.velAdd = Vector2D.Zero();
     },
 
+    
+
     /**
      * Draw the player character as a black circle with a white outline whose thickness 'beats' with the music.
      */
     display() {
-
         push(); //We don't want to keep these drawing settings.
 
         //Makes the stroke white, its thickness dependent on the amplitude level.
@@ -377,8 +439,81 @@ let Player =
 
         //Draw the player circle around the center of the screen (affected by the camera offset).
         circle((width / 2) - camera.offset.x, (height / 1.5) - camera.offset.y, 10);
-        
+
         //Revert to the previous drawing settings.
         pop();
+    },
+
+
+
+    //#region Collision events
+
+    /** Event to execute when the player collides with a ground platform. */
+    onGCol(platformPos) {
+        //Anchor the player to the ground.
+        this.pos.y = platformPos - 10;
+        //Remove any vertical velocity.
+        this.vel.y = 0.1;
+        //Switch the player's state and last state to grounded.
+        this.state = 1;
+        this.lastState = 1;
+        //Activate the last state's timer.
+        this.lastStateTimer = 5;
+        //Recharge the player's dash.
+        this.dash = true;
+    },
+
+    /** Event to execute when the player collides with a ceilling platform. */
+    onTCol(platformPos) {
+        //Bring the player back to where they collided with the ceiling.
+        this.pos.y = platformPos + 10;
+        //Remove and vertical velocity.
+        this.vel.y = 0;
+    },
+
+    /** Event to execute when the player collides with a left wall platform. */
+    onLCol(platformPos) {
+        //Anchor the player to the wall.
+        this.pos.x = platformPos + 10;
+        //Keep the player on the wall with a small velocity to the left.
+        this.vel.x = -1;
+
+        //Switch the player's state and last state to wall-sliding (left).
+        this.state = 2;
+        this.lastState = 2;
+        //Activate the last state's timer. (Wall-jumping can be unintuative, so an extra 3 frames are given.)
+        this.lastStateTimer = 8;
+
+        //Recharge the player's dash.
+        this.dash = true;
+        //Set the player's desired direction away from the wall.
+        this.dir.x++;
+
+        //Make the player face right.
+        this.oritentation = true;
+    },
+
+    /** Event to execute when the player collides with a right wall platform. */
+    onRCol(platformPos) {
+        //Anchor the player to the wall.
+        this.pos.x = platformPos - 10;
+        //Keep the player on the wall with a small velocity to the right.
+        this.vel.x = 1;
+
+        //Switch the player's state and last state to wall-sliding (right).
+        this.state = 3;
+        this.lastState = 3;
+        //Activate the last state's timer. (Wall-jumping can be unintuative, so an extra 3 frames are given.)
+        this.lastStateTimer = 8;
+
+        //Recharge the player's dash.
+        this.dash = true;
+        //Set the player's desired direction away from the wall.
+        this.dir.x--;
+
+        //Make the player face left.
+        this.oritentation = false;
     }
+
+    //#endregion
 }

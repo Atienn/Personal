@@ -51,36 +51,36 @@ class Level {
             //PLATFORM BUNDLE
             {
                 g: [
-                    new Platform(1100, 425, 1425, false),
-                    new Platform(975, 1400, 1625, false),
-                    new Platform(850, 1600, 1825, false),
-                    new Platform(600, 1350, 1600, false),
-                    new Platform(650, 575, 1375, false),
-                    new Platform(600, 400, 600, false),
-                    new Platform(600, 175, 600, false),
-                    new Platform(250, 500, 1275, false)
+                    new Platform(1100, 425, 1425),
+                    new Platform(975, 1400, 1625),
+                    new Platform(850, 1600, 1825),
+                    new Platform(600, 1350, 1600),
+                    new Platform(650, 575, 1375),
+                    new Platform(600, 400, 600),
+                    new Platform(600, 175, 600),
+                    new Platform(250, 500, 1275)
                 ],
                 c: [
-                    new Platform(800, 425, 1000, false),
-                    new Platform(700, 1000, 1600, false),
-                    new Platform(350, 500, 1825, false),
-                    new Platform(50, 175, 1275, false)
+                    new Platform(800, 425, 1000),
+                    new Platform(700, 1000, 1600),
+                    new Platform(350, 500, 1825),
+                    new Platform(50, 175, 1275)
                 ],
 
                 l: [
-                    new Platform(450, 775, 1125, true),
-                    new Platform(1000, 700, 800, true),
-                    new Platform(1600, 600, 700, true),
-                    new Platform(600, 600, 675, true),
-                    new Platform(200, 25, 625, true)
+                    new Platform(450, 775, 1125),
+                    new Platform(1000, 700, 800),
+                    new Platform(1600, 600, 700),
+                    new Platform(600, 600, 675),
+                    new Platform(200, 25, 625)
                 ],
                 r: [
-                    new Platform(1400, 975, 1125, true),
-                    new Platform(1600, 850, 1000, true),
-                    new Platform(1800, 325, 875, true),
-                    new Platform(1350, 600, 675, true),
-                    new Platform(500, 250, 350, true),
-                    new Platform(1250, 25, 275, true)
+                    new Platform(1400, 975, 1125),
+                    new Platform(1600, 850, 1000),
+                    new Platform(1800, 325, 875),
+                    new Platform(1350, 600, 675),
+                    new Platform(500, 250, 350),
+                    new Platform(1250, 25, 275)
                 ]
             },
 
@@ -121,45 +121,45 @@ class Level {
             //PLATFORM BUNDLE
             {
                 g: [
-                    new Platform(1600, 25, 375, false),
-                    new Platform(1600, 425, 1025, false),
-                    new Platform(1450, 350, 450, false),
-                    new Platform(1300, 1000, 1200, false),
-                    new Platform(1400, 1175, 1675, false),
-                    new Platform(550, 1400, 1525, false),
-                    new Platform(1000, 975, 1425, false),
-                    new Platform(900, 75, 1000, false),
-                    new Platform(300, 225, 325, false),
-                    new Platform(300, 900, 1800, false)
+                    new Platform(1600, 25, 375),
+                    new Platform(1600, 425, 1025),
+                    new Platform(1450, 350, 450),
+                    new Platform(1300, 1000, 1200),
+                    new Platform(1400, 1175, 1675),
+                    new Platform(550, 1400, 1525),
+                    new Platform(1000, 975, 1425),
+                    new Platform(900, 75, 1000),
+                    new Platform(300, 225, 325),
+                    new Platform(300, 900, 1800)
                 ],
                 c: [
-                    new Platform(1100, 25, 1525, false),
-                    new Platform(400, 900, 1175, false),
-                    new Platform(400, 1250, 1675, false),
-                    new Platform(800, 1150, 1275, false),
-                    new Platform(50, 75, 1800, false),
-                    new Platform(675, 225, 325, false)
+                    new Platform(1100, 25, 1525),
+                    new Platform(400, 900, 1175),
+                    new Platform(400, 1250, 1675),
+                    new Platform(800, 1150, 1275),
+                    new Platform(50, 75, 1800),
+                    new Platform(675, 225, 325)
                 ],
 
                 l: [
-                    new Platform(50, 1075, 1625, true),
-                    new Platform(450, 1450, 1625, true),
-                    new Platform(1200, 1300, 1425, true),
-                    new Platform(1525, 550, 1100, true),
-                    new Platform(1275, 375, 800, true),
-                    new Platform(1000, 900, 1025, true),
-                    new Platform(100, 25, 925, true),
-                    new Platform(325, 300, 675, true)
+                    new Platform(50, 1075, 1625),
+                    new Platform(450, 1450, 1625),
+                    new Platform(1200, 1300, 1425),
+                    new Platform(1525, 550, 1100),
+                    new Platform(1275, 375, 800),
+                    new Platform(1000, 900, 1025),
+                    new Platform(100, 25, 925),
+                    new Platform(325, 300, 675)
                 ],
                 r: [
-                    new Platform(350, 1450, 1625, true),
-                    new Platform(1000, 1300, 1625, true),
-                    new Platform(1650, 375, 1425, true),
-                    new Platform(1400, 550, 1025, true),
-                    new Platform(1150, 375, 800, true),
-                    new Platform(225, 300, 675, true),
-                    new Platform(900, 300, 400, true),
-                    new Platform(1775, 25, 325, true)
+                    new Platform(350, 1450, 1625),
+                    new Platform(1000, 1300, 1625),
+                    new Platform(1650, 375, 1425),
+                    new Platform(1400, 550, 1025),
+                    new Platform(1150, 375, 800),
+                    new Platform(225, 300, 675),
+                    new Platform(900, 300, 400),
+                    new Platform(1775, 25, 325)
                 ]
             },
 
@@ -212,65 +212,65 @@ class Level {
             //PLATFORM BUNDLE
             {
                 g: [
-                    new Platform(2400, 75, 625, false),
-                    new Platform(2300, 600, 975, false),
-                    new Platform(1700, 950, 1100, false),
-                    new Platform(2600, 1075, 1525, false),
-                    new Platform(2500, 1500, 2025, false),
-                    new Platform(2200, 2000, 2700, false),
-                    new Platform(350, 2500, 2700, false),
-                    new Platform(2400, 2675, 3825, false),
-                    new Platform(2100, 3800, 3900, false),
-                    new Platform(3100, 2675, 4075, false),
-                    new Platform(3025, 2400, 2700, false),
-                    new Platform(3700, 625, 2425, false),
-                    new Platform(3600, 275, 650, false)
+                    new Platform(2400, 75, 625),
+                    new Platform(2300, 600, 975),
+                    new Platform(1700, 950, 1100),
+                    new Platform(2600, 1075, 1525),
+                    new Platform(2500, 1500, 2025),
+                    new Platform(2200, 2000, 2700),
+                    new Platform(350, 2500, 2700),
+                    new Platform(2400, 2675, 3825),
+                    new Platform(2100, 3800, 3900),
+                    new Platform(3100, 2675, 4075),
+                    new Platform(3025, 2400, 2700),
+                    new Platform(3700, 625, 2425),
+                    new Platform(3600, 275, 650)
                 ],
                 c: [
-                    new Platform(2100, 75, 600, false),
-                    new Platform(1250, 575, 975, false),
-                    new Platform(1400, 950, 2500, false),
-                    new Platform(2200, 1500, 1650, false),
-                    new Platform(1500, 2700, 3825, false),
-                    new Platform(1900, 3800, 4075, false),
-                    new Platform(2800, 625, 3900, false),
-                    new Platform(3100, 1900, 2000, false),
-                    new Platform(3250, 1450, 1550, false),
-                    new Platform(3400, 1000, 1100, false),
-                    new Platform(3400, 275, 650, false)
+                    new Platform(2100, 75, 600),
+                    new Platform(1250, 575, 975),
+                    new Platform(1400, 950, 2500,),
+                    new Platform(2200, 1500, 1650),
+                    new Platform(1500, 2700, 3825),
+                    new Platform(1900, 3800, 4075),
+                    new Platform(2800, 625, 3900),
+                    new Platform(3100, 1900, 2000),
+                    new Platform(3250, 1450, 1550),
+                    new Platform(3400, 1000, 1100),
+                    new Platform(3400, 275, 650)
                 ],
 
                 l: [
-                    new Platform(100, 2075, 2425, true),
-                    new Platform(600, 1225, 2100, true),
-                    new Platform(1100, 1700, 2625, true),
-                    new Platform(1650, 1375, 2200, true),
-                    new Platform(2500, 350, 1300, true),
-                    new Platform(2700, 2200, 2425, true),
-                    new Platform(3900, 2100, 2800, true),
-                    new Platform(2700, 3025, 3125, true),
-                    new Platform(2000, 2775, 3100, true),
-                    new Platform(1550, 2775, 3250, true),
-                    new Platform(1100, 2775, 3400, true),
-                    new Platform(650, 2775, 3400, true),
-                    new Platform(650, 3600, 3725, true),
-                    new Platform(300, 3375, 3625, true)
+                    new Platform(100, 2075, 2425),
+                    new Platform(600, 1225, 2100),
+                    new Platform(1100, 1700, 2625),
+                    new Platform(1650, 1375, 2200),
+                    new Platform(2500, 350, 1300),
+                    new Platform(2700, 2200, 2425),
+                    new Platform(3900, 2100, 2800),
+                    new Platform(2700, 3025, 3125),
+                    new Platform(2000, 2775, 3100),
+                    new Platform(1550, 2775, 3250),
+                    new Platform(1100, 2775, 3400),
+                    new Platform(650, 2775, 3400),
+                    new Platform(650, 3600, 3725),
+                    new Platform(300, 3375, 3625)
                 ],
                 r: [
-                    new Platform(600, 2300, 2425, true),
-                    new Platform(950, 1700, 2325, true),
-                    new Platform(950, 1225, 1400, true),
-                    new Platform(1500, 1375, 2200, true),
-                    new Platform(1500, 2500, 2625, true),
-                    new Platform(2000, 2200, 2525, true),
-                    new Platform(2700, 350, 1500, true),
-                    new Platform(3800, 1475, 1900, true),
-                    new Platform(3800, 2100, 2425, true),
-                    new Platform(4050, 1875, 3125, true),
-                    new Platform(2400, 3025, 3725, true),
-                    new Platform(1900, 2775, 3100, true),
-                    new Platform(1450, 2775, 3250, true),
-                    new Platform(1000, 2775, 3400, true)
+                    new Platform(600, 2300, 2425),
+                    new Platform(950, 1700, 2325),
+                    new Platform(950, 1225, 1400),
+                    new Platform(1500, 1375, 2200),
+                    new Platform(1500, 2500, 2625),
+                    new Platform(2000, 2200, 2525),
+                    new Platform(2700, 350, 1500),
+                    new Platform(3800, 1475, 1900),
+                    new Platform(3800, 2100, 2425),
+                    new Platform(4050, 1875, 3125),
+                    new Platform(2400, 3025, 3725),
+                    new Platform(1900, 2775, 3100),
+                    new Platform(1450, 2775, 3250),
+                    new Platform(1000, 2775, 3400)
                 ]
             },
 
@@ -344,25 +344,25 @@ class Level {
             //PLATFORM BUNDLE
             {
                 g: [
-                    new Platform(1100, 175, 1025, false),
-                    new Platform(900, 1000, 1525, false)
+                    new Platform(1100, 175, 1025),
+                    new Platform(900, 1000, 1525)
                 ],
                 c: [
-                    new Platform(400, 175, 1525, false)
+                    new Platform(400, 175, 1525)
                 ],
 
                 l: [
-                    new Platform(200, 375, 1125, true)
+                    new Platform(200, 375, 1125)
                 ],
                 r: [
-                    new Platform(1000, 900, 1125, true),
-                    new Platform(1500, 375, 925, true)
+                    new Platform(1000, 900, 1125),
+                    new Platform(1500, 375, 925)
                 ]
             },
 
             //ENTITIES ARRAY
             [
-                new Entity(new Vector2D(900, 1100), 50, 10, Entity.redTrianglesU, Entity.rectCheck, Entity.knockback, new Vector2D(0, -50)),
+                new Entity(new Vector2D(900, 1090), 50, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -50)),
                 new StateEntity(new Vector2D(660, 1000), 50, 2, StateEntity.yellowCircles, StateEntity.circleCheckHold, Entity.dashRefresh),
 
                 new Entity(new Vector2D(400, 1000), 125, 50, Entity.whiteTextBox, misc.noCheck, misc.none, 'Sample text.'),
