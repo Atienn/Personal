@@ -14,9 +14,9 @@ class Level {
      * @param startPosition {Vector2D} - The player's starting position.
      * @param objective {String} - List of the level's objectives.
      * @param musicFile {String} - Name of the music file associated with the level.
-     * @param platforms {Array} - The array of platforms the level holds.
-     * @param entities {Array} - The array of entities the level holds.
-     * @param backgrounds {Array} - The array of background rects.
+     * @param platforms {Array} - The array of the level's platforms.
+     * @param entities {Array} - The array of the level's entities.
+     * @param backgrounds {Array} - The array of the level's background blocks.
      */
     constructor(title, startPosition, objective, musicFile, platforms, entities, backgrounds = []) {
         this.name = title;
@@ -42,7 +42,7 @@ class Level {
             //LEVEL NAME
             'TUTORIAL',
             //STARTING POSISION
-            new Vector2D(550, 1050),
+            new Vector2D(250, 1225),
             //OBJECTIVE(S)
             "- Reach the end gate.",
             //TRACK NAME
@@ -51,60 +51,92 @@ class Level {
             //PLATFORM BUNDLE
             {
                 g: [
-                    new Platform(1100, 425, 1425),
-                    new Platform(975, 1400, 1625),
-                    new Platform(850, 1600, 1825),
-                    new Platform(600, 1350, 1600),
-                    new Platform(650, 575, 1375),
-                    new Platform(600, 400, 600),
-                    new Platform(600, 175, 600),
-                    new Platform(250, 500, 1275)
+                    new Platform(1300, 125, 700),
+                    new Platform(1500, 675, 1525),
+                    new Platform(1375, 1500, 1725),
+                    new Platform(1250, 1700, 1875),
+                    new Platform(850, 1400, 1725),
+                    new Platform(1150, 1125, 1400),
+                    new Platform(200, 1300, 1575),
+                    new Platform(250, 575, 1325),
+                    new Platform(200, 350, 600),
+                    new Platform(850, 175, 725),
+                    new Platform(500, 700, 800),
+                    new Platform(600, 775, 1475)
                 ],
                 c: [
-                    new Platform(800, 425, 1000),
-                    new Platform(700, 1000, 1600),
-                    new Platform(350, 500, 1825),
-                    new Platform(50, 175, 1275)
+                    new Platform(1000, 125, 1025),
+                    new Platform(1250, 1000, 1400),
+                    new Platform(950, 1400, 1875),
+                    new Platform(700, 1125, 1575),
+                    new Platform(50, 175, 1725),
+                    new Platform(700, 350, 550),
+                    new Platform(350, 525, 1475)
                 ],
 
                 l: [
-                    new Platform(450, 775, 1125),
-                    new Platform(1000, 700, 800),
-                    new Platform(1600, 600, 700),
-                    new Platform(600, 600, 675),
-                    new Platform(200, 25, 625)
+                    new Platform(150, 975, 1325),
+                    new Platform(700, 1300, 1525),
+                    new Platform(1150, 675, 1175),
+                    new Platform(1400, 1150, 1250),
+                    new Platform(1575, 200, 700),
+                    new Platform(600, 200, 275),
+                    new Platform(200, 25, 875),
+                    new Platform(550, 325, 700),
+                    new Platform(800, 500, 625)
                 ],
                 r: [
-                    new Platform(1400, 975, 1125),
-                    new Platform(1600, 850, 1000),
-                    new Platform(1800, 325, 875),
-                    new Platform(1350, 600, 675),
-                    new Platform(500, 250, 350),
-                    new Platform(1250, 25, 275)
+                    new Platform(1000, 975, 1250),
+                    new Platform(1500, 1375, 1525),
+                    new Platform(1700, 1250, 1400),
+                    new Platform(1850, 925, 1275),
+                    new Platform(1400, 850, 950),
+                    new Platform(1700, 25, 875),
+                    new Platform(1300, 200, 275),
+                    new Platform(350, 200, 700),
+                    new Platform(700, 500, 875),
+                    new Platform(1450, 325, 625)
                 ]
             },
 
             //ENTITIES ARRAY
             [
-                new Entity(new Vector2D(1235, 150), 15, 100, Entity.cyanRectStack, Entity.rectCheck, Entity.levelClear, undefined),
-                new Entity(new Vector2D(975, 640), 375, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(1450, 575)),
+                //Goal.
+                new Entity(new Vector2D(1435, 475), 15, 125, Entity.cyanRectStack, Entity.rectCheck, Entity.levelClear),
 
-                //The text here needs to be a function since settings only get set at preload().
-                new Entity(new Vector2D(675, 925), 200, 100, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `Welcome to PROJECT VECTOR\n\nUse ${settings.inputName.up}, ${settings.inputName.left}, ${settings.inputName.down} and ${settings.inputName.right} to move.` }),
-                new Entity(new Vector2D(1200, 925), 200, 100, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `Use ${settings.inputName.jump} to jump.` }),
-                new Entity(new Vector2D(1700, 700), 75, 100, Entity.whiteTextBox, misc.noCheck, misc.none, `Jumping can be done off walls.`),
-                new Entity(new Vector2D(1350, 450), 100, 100, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `Use ${settings.inputName.dash} to dash.`}),
-                new Entity(new Vector2D(700, 150), 195, 100, Entity.whiteTextBox, misc.noCheck, misc.none, 'The goal of this game is to complete levels in the least amount of time possible.\n\nThe timer at the top-left corner shows the amount of time taken.'),
-                new Entity(new Vector2D(1050, 150), 100, 100, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `Use ${settings.inputName.restart} to quick-restart.`})
+                //Teleport.
+                new Entity(new Vector2D(950, 240), 350, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(1450, 125)),
+                new Entity(new Vector2D(690, 675), 10, 175, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(450, 750)),                
+                new Entity(new Vector2D(560, 525), 10, 175, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(450, 750)),
+
+                //Textboxes. Some of which need to have text wrapped in a function to access variables that can change at run-time.
+                new Entity(new Vector2D(425, 1150), 200, 100, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `Welcome to PROJECT VECTOR\n\nUse ${settings.inputName.up}, ${settings.inputName.left}, ${settings.inputName.down} and ${settings.inputName.right} to move.` }),
+                new Entity(new Vector2D(1275, 1375), 200, 100, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `Use ${settings.inputName.jump} to jump.` }),
+                new Entity(new Vector2D(1275, 1025), 75, 100, Entity.textBox, misc.noCheck, misc.none, `Jumping can be done off walls.`),
+                new Entity(new Vector2D(1500, 750), 175, 100, Entity.textBox, misc.noCheck, misc.none, `When between narrow walls, hold jump to quickly chain wall-jumps.`),
+                new Entity(new Vector2D(1450, 100), 100, 100, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `Use ${settings.inputName.dash} to dash.`}),
+                new Entity(new Vector2D(450, 100), 100, 100, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `Hold ${settings.inputName.down} to fall faster.`}),
+                new Entity(new Vector2D(450, 750), 150, 100, Entity.textBox, misc.noCheck, misc.none, `While mid-air, hold jump to slightly increase air time.`),
+                new Entity(new Vector2D(1100, 450), 170, 150, Entity.dynamicTextBox, misc.noCheck, misc.none, () => { return `The goal of this game is to complete levels in the least amount of time.\n\nThe time taken is shown at the top-left corner.\n\nUse ${settings.inputName.restart} to restart.`})
             ],
 
             [
-                new BGBlock(450, 1400, 800, 1100),
-                new BGBlock(1000, 1600, 700, 975),
-                new BGBlock(1600, 1800, 350, 850),
-                new BGBlock(200, 1600, 350, 600),
-                new BGBlock(600, 1350, 600, 650),
-
+               new BGBlock(150, 700, 1000, 1300),
+               new BGBlock(700, 1000, 1000, 1500),
+               new BGBlock(1000, 1500, 1250, 1500),
+               new BGBlock(1500, 1700, 1250, 1375),
+               new BGBlock(1400, 1850, 950, 1250),
+               new BGBlock(1150, 1400, 700, 1150),
+               new BGBlock(1400, 1700, 700, 850),
+               new BGBlock(1575, 1700, 50, 700),
+               new BGBlock(950, 1575, 50, 200),
+               new BGBlock(600, 1300, 200, 250),
+               new BGBlock(350, 950, 50, 200),
+               new BGBlock(200, 350, 50, 700),
+               new BGBlock(200, 700, 700, 850),
+               new BGBlock(550, 700, 350, 700),
+               new BGBlock(700, 1450, 350, 500),
+               new BGBlock(800, 1450, 500, 600),
             ]
         ),
 
@@ -165,20 +197,21 @@ class Level {
 
             //ENTITIES ARRAY
             [
-                //Goal
+                //Goal.
                 new LabeledEntity(new Vector2D(1760, 175), 15, 125, StateEntity.cyanRectStackActive, StateEntity.rectCheckActive, Entity.levelClear, null, GOAL),
 
-                //Switches
+                //Switches.
                 new LabeledEntity(new Vector2D(800, 1250), 50, 50, StateEntity.greenSqr, StateEntity.rectCheckOnce, LabeledEntity.groupCheck, LabeledEntity.activateGoal, SWITCH),
                 new LabeledEntity(new Vector2D(1100, 550), 50, 50, StateEntity.greenSqr, StateEntity.rectCheckOnce, LabeledEntity.groupCheck, LabeledEntity.activateGoal, SWITCH),
                 new LabeledEntity(new Vector2D(165, 300), 50, 50, StateEntity.greenSqr, StateEntity.rectCheckOnce, LabeledEntity.groupCheck, LabeledEntity.activateGoal, SWITCH),
                 new LabeledEntity(new Vector2D(385, 300), 50, 50, StateEntity.greenSqr, StateEntity.rectCheckOnce, LabeledEntity.groupCheck, LabeledEntity.activateGoal, SWITCH),
 
-                //Other
+                //Teleport.
                 new Entity(new Vector2D(1200, 990), 200, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(1462.5, 525)),
                 new Entity(new Vector2D(1425, 1390), 225, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(1100, 1275))
             ],
 
+            //BACKGROUND ARRAY
             [
                 new BGBlock(50, 450, 1100, 1450),
                 new BGBlock(50, 350, 1450, 1600),
@@ -217,117 +250,134 @@ class Level {
                     new Platform(1700, 950, 1100),
                     new Platform(2600, 1075, 1525),
                     new Platform(2500, 1500, 2025),
-                    new Platform(2200, 2000, 2700),
-                    new Platform(350, 2500, 2700),
-                    new Platform(2400, 2675, 3825),
-                    new Platform(2100, 3800, 3900),
-                    new Platform(3100, 2675, 4075),
-                    new Platform(3025, 2400, 2700),
-                    new Platform(3700, 625, 2425),
-                    new Platform(3600, 275, 650)
+                    new Platform(1900, 2000, 2200),
+                    new Platform(2200, 2175, 3575),
+                    new Platform(2100, 3550, 3825),
+                    new Platform(1450, 3800, 4600),
+                    new Platform(1300, 4800, 4925),
+                    new Platform(2950, 3975, 4825),
+                    new Platform(2900, 3700, 4000),
+                    new Platform(4400, 2625, 3725),
+                    new Platform(4000, 2275, 2700),
+                    new Platform(3050, 2500, 3025)
                 ],
                 c: [
                     new Platform(2100, 75, 600),
                     new Platform(1250, 575, 975),
-                    new Platform(1400, 950, 2500,),
-                    new Platform(2200, 1500, 1650),
-                    new Platform(1500, 2700, 3825),
-                    new Platform(1900, 3800, 4075),
-                    new Platform(2800, 625, 3900),
-                    new Platform(3100, 1900, 2000),
-                    new Platform(3250, 1450, 1550),
-                    new Platform(3400, 1000, 1100),
-                    new Platform(3400, 275, 650)
+                    new Platform(1400, 950, 1525),
+                    new Platform(2150, 1500, 1650),
+                    new Platform(1600, 1625, 3675),
+                    new Platform(1200, 3675, 4925),
+                    new Platform(1600, 3975, 4600),
+                    new Platform(2600, 3475, 4000),
+                    new Platform(3950, 3100, 3500),
+                    new Platform(4100, 2625, 2700),
+                    new Platform(3650, 2500, 3125),
+                    new Platform(2800, 2275, 3025)
                 ],
 
                 l: [
                     new Platform(100, 2075, 2425),
                     new Platform(600, 1225, 2100),
                     new Platform(1100, 1700, 2625),
-                    new Platform(1650, 1375, 2200),
-                    new Platform(2500, 350, 1300),
-                    new Platform(2700, 2200, 2425),
-                    new Platform(3900, 2100, 2800),
-                    new Platform(2700, 3025, 3125),
-                    new Platform(2000, 2775, 3100),
-                    new Platform(1550, 2775, 3250),
-                    new Platform(1100, 2775, 3400),
-                    new Platform(650, 2775, 3400),
-                    new Platform(650, 3600, 3725),
-                    new Platform(300, 3375, 3625)
+                    new Platform(1650, 1575, 2150),
+                    new Platform(2200, 1900, 2225),
+                    new Platform(3675, 1200, 1600),
+                    new Platform(4600, 1450, 1600),
+                    new Platform(4000, 1575, 2600),
+                    new Platform(4000, 2900, 2975),
+                    new Platform(3500, 2575, 3950),
+                    new Platform(2650, 4075, 4425),
+                    new Platform(2700, 4000, 4100),
+                    new Platform(2300, 2775, 4025)
                 ],
                 r: [
                     new Platform(600, 2300, 2425),
                     new Platform(950, 1700, 2325),
                     new Platform(950, 1225, 1400),
-                    new Platform(1500, 1375, 2200),
+                    new Platform(1500, 1375, 2150),
                     new Platform(1500, 2500, 2625),
-                    new Platform(2000, 2200, 2525),
-                    new Platform(2700, 350, 1500),
-                    new Platform(3800, 1475, 1900),
-                    new Platform(3800, 2100, 2425),
-                    new Platform(4050, 1875, 3125),
-                    new Platform(2400, 3025, 3725),
-                    new Platform(1900, 2775, 3100),
-                    new Platform(1450, 2775, 3250),
-                    new Platform(1000, 2775, 3400)
+                    new Platform(2000, 1900, 2525),
+                    new Platform(3550, 2100, 2225),
+                    new Platform(3800, 1450, 2125),
+                    new Platform(4900, 1175, 1325),
+                    new Platform(4800, 1300, 2975),
+                    new Platform(3700, 2900, 4425),
+                    new Platform(3100, 3625, 3950),
+                    new Platform(2500, 3050, 3650),
+                    new Platform(3000, 2775, 3075)
                 ]
             },
 
             //ENTITIES ARRAY
             [
                 //Goal.
-                new Entity(new Vector2D(315, 3500), 15, 100, Entity.cyanRectStack, Entity.rectCheck, Entity.levelClear, undefined),
+                new Entity(new Vector2D(2985, 2925), 15, 125, Entity.cyanRectStack, Entity.rectCheck, Entity.levelClear, undefined),
 
                 //Teleport.
-               // new Entity(new Vector2D(1425, 2290), 825, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(550, 2000)),
-               // new Entity(new Vector2D(3250, 2390), 550, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(2400, 2075)),
-               // new Entity(new Vector2D(3375, 3090), 675, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(3850, 2075)),
-               // new Entity(new Vector2D(1525, 3690), 875, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(2550, 3000)),
+                new Entity(new Vector2D(1300, 2590), 200, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(1025, 1600)),
+                new Entity(new Vector2D(2875, 2190), 675, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(2100, 1800)),
+                new Entity(new Vector2D(4200, 1440), 400, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(3575, 2000)),
+                new Entity(new Vector2D(4140, 1950), 140, 25, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(4850, 1250)),
+                new Entity(new Vector2D(4660, 1950), 140, 25, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(4850, 1250)),
+                new Entity(new Vector2D(4520, 2250), 280, 25, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(4850, 1250)),
+                new Entity(new Vector2D(4280, 2550), 280, 25, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(4850, 1250)),
+                new Entity(new Vector2D(4400, 2940), 400, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(4850, 1250)),
+                new Entity(new Vector2D(3175, 4390), 525, 10, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(3800, 2800)),
+                new Entity(new Vector2D(2660, 4250), 10, 150, Entity.orangeRects, Entity.rectCheck, Entity.teleport, new Vector2D(3800, 2800)),
 
-                //Jump pad.
+                //Jump pads.
                 new Entity(new Vector2D(850, 2290), 100, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -75)),
-                new Entity(new Vector2D(2600, 2190), 100, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -55)),
-                new Entity(new Vector2D(1775, 2490), 100, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -55)),
-                new Entity(new Vector2D(1775, 2490), 100, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -55)),
-
-                //Dash refresh.
-                new StateEntity(new Vector2D(2600, 1200), 75, 2, StateEntity.yellowCircles, StateEntity.circleCheckHold, Entity.dashRefresh),
-                new StateEntity(new Vector2D(2600, 750), 75, 2, StateEntity.yellowCircles, StateEntity.circleCheckHold, Entity.dashRefresh),
-                new StateEntity(new Vector2D(3300, 2875), 75, 2, StateEntity.yellowCircles, StateEntity.circleCheckHold, Entity.dashRefresh),
-                new StateEntity(new Vector2D(1950, 3175), 75, 2, StateEntity.yellowCircles, StateEntity.circleCheckHold, Entity.dashRefresh),
-                new StateEntity(new Vector2D(1500, 3325), 75, 2, StateEntity.yellowCircles, StateEntity.circleCheckHold, Entity.dashRefresh),
-                new StateEntity(new Vector2D(1050, 3475), 75, 2, StateEntity.yellowCircles, StateEntity.circleCheckHold, Entity.dashRefresh),
+                new Entity(new Vector2D(1750, 2490), 150, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -55)),
+                new Entity(new Vector2D(2210, 2000), 10, 100, Entity.redTrianglesR, Entity.lineCheckY, Entity.knockback, new Vector2D(65, -25)),
+                new Entity(new Vector2D(3700, 2090), 100, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -65)),
+                new Entity(new Vector2D(3685, 1300), 10, 100, Entity.redTrianglesR, Entity.lineCheckY, Entity.knockback, new Vector2D(55, -15)),
+                new Entity(new Vector2D(3600, 2610), 100, 10, Entity.redTrianglesD, Entity.lineCheckX, Entity.knockback, new Vector2D(0, 60)),
+                new Entity(new Vector2D(3690, 4250), 10, 150, Entity.redTrianglesL, Entity.lineCheckY, Entity.knockback, new Vector2D(-70, -20)),
+                new Entity(new Vector2D(2400, 3990), 100, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -90)),
+                new Entity(new Vector2D(2310, 2925), 10, 100, Entity.redTrianglesR, Entity.lineCheckY, Entity.knockback, new Vector2D(65, 0)),
                 
                 //Textboxes.
-                new Entity(new Vector2D(2600, 2000), 100, 100, Entity.whiteTextBox, misc.noCheck, misc.none, 'Leap and hold.\nRide the surge.\nDemand the skies.'),
-                new Entity(new Vector2D(2600, 25), 250, 75, Entity.whiteTextBox, misc.noCheck, misc.none, 'Still, at the edge of the world,\nthere is nothing for you here.'),
-                new Entity(new Vector2D(2600, 125), 250, 50, Entity.whiteTextBox, misc.noCheck, misc.none, 'Return to what you know.\nVenturing outwards will only lead to disappointment.'),
-               // new Entity(new Vector2D(3300, 2975), 150, 50, Entity.whiteTextBox, misc.noCheck, misc.none, 'Fly again, and again.')
-            ]
-        ),
+                new Entity(new Vector2D(350, 2250), 100, 100, Entity.textBox, misc.noCheck, misc.none, 'Leap and hold.\nRide the surge.\nDemand the skies.'),
+            ],
 
-        new Level (
-            //LEVEL NAME
-            'LEVEL 3',
-            //START POSITION
-            new Vector2D(0,0),
-            //OBJECTIVE(S)
-            "- None.",
-            //TRACK NAME
-            "Neon.Deflector - Outpost X",
-
-            //PLATFORM BUNDLE
-            {
-                g: [],
-                c: [],
-                l: [],
-                r: []
-            },
-
-            //ENTITIES ARRAY
+            //BACKGROUND ARRAY
             [
-
+                new BGBlock(100, 600, 2100, 2400),
+                new BGBlock(600, 950, 1500, 2300),
+                new BGBlock(600, 950, 1250, 1500),
+                new BGBlock(950, 1500, 1400, 1700),
+                new BGBlock(1100, 1500, 1700, 2300),
+                new BGBlock(1100, 1500, 2300, 2600),
+                new BGBlock(1500, 2000, 2150, 2500),
+                new BGBlock(1650, 2000, 1600, 2150),
+                new BGBlock(2000, 2800, 1600, 1900),
+                new BGBlock(2200, 2800, 1900, 2200),
+                new BGBlock(2800, 2950, 1600, 2200),
+                new BGBlock(2950, 3675, 1600, 1900),
+                new BGBlock(2950, 3550, 1900, 2200),
+                new BGBlock(3550, 3800, 1900, 2100),
+                new BGBlock(3675, 3800, 1200, 1900),
+                new BGBlock(3800, 4800, 1200, 1450),
+                new BGBlock(4800, 4900, 1200, 1300),
+                new BGBlock(4600, 4800, 1450, 1900),
+                new BGBlock(4000, 4600, 1600, 1900),
+                new BGBlock(4000, 4200, 1900, 2300),
+                new BGBlock(4200, 4800, 1900, 2300),
+                new BGBlock(4000, 4400, 2300, 2600),
+                new BGBlock(4400, 4800, 2300, 2600),
+                new BGBlock(4600, 4800, 2600, 2900),
+                new BGBlock(4200, 4600, 2600, 2900),
+                new BGBlock(3700, 4200, 2600, 2900),
+                new BGBlock(4000, 4800, 2900, 2950),
+                new BGBlock(3500, 3700, 2600, 3950),
+                new BGBlock(3100, 3700, 3950, 4100),
+                new BGBlock(2700, 3100, 3650, 4100),
+                new BGBlock(3500, 3700, 4100, 4400),
+                new BGBlock(2650, 3500, 4100, 4400),
+                new BGBlock(2300, 2700, 3650, 4000),
+                new BGBlock(2300, 2500, 2800, 3650),
+                new BGBlock(2500, 3000, 2800, 3050)
             ]
         ),
 
@@ -337,7 +387,7 @@ class Level {
             //STARTING POSITION
             new Vector2D(1225, 825),
             //OBJECTIVE(S)
-            "- None.",
+            "- None.\n- This level exists purely as testing grounds for new / existing features.",
             //TRACK NAME
             "Neon.Deflector - Outpost X",
 
@@ -363,12 +413,19 @@ class Level {
             //ENTITIES ARRAY
             [
                 new Entity(new Vector2D(900, 1090), 50, 10, Entity.redTrianglesU, Entity.lineCheckX, Entity.knockback, new Vector2D(0, -50)),
+
                 new StateEntity(new Vector2D(660, 1000), 50, 2, StateEntity.yellowCircles, StateEntity.circleCheckHold, Entity.dashRefresh),
 
-                new Entity(new Vector2D(400, 1000), 125, 50, Entity.whiteTextBox, misc.noCheck, misc.none, 'Sample text.'),
-                new Entity(new Vector2D(400, 1150), 150, 50, Entity.whiteTextBox, misc.noCheck, misc.none, 'Textbox.'),
-                new Entity(new Vector2D(900, 1150), 50, 50, Entity.whiteTextBox, misc.noCheck, misc.none, 'Jump pad.'),
-                new Entity(new Vector2D(660, 1150), 100, 50, Entity.whiteTextBox, misc.noCheck, misc.none, 'Dash refresh')
+                new Entity(new Vector2D(400, 1000), 125, 50, Entity.textBox, misc.noCheck, misc.none, 'Sample text.'),
+                new Entity(new Vector2D(400, 1150), 150, 50, Entity.textBox, misc.noCheck, misc.none, 'Textbox.'),
+                new Entity(new Vector2D(900, 1150), 50, 50, Entity.textBox, misc.noCheck, misc.none, 'Jump pad.'),
+                new Entity(new Vector2D(660, 1150), 100, 50, Entity.textBox, misc.noCheck, misc.none, 'Dash refresh')
+            ],
+
+            //BACKGROUND ARRAY
+            [
+                new BGBlock(200, 1500, 400, 900),
+                new BGBlock(200, 1000, 900, 1100)
             ]
         )
     ]

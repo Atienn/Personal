@@ -25,7 +25,7 @@ class Platform {
     //#region Collisions
 
     /**
-     * Checks if an entity has collided with the platform using its current and last position.
+     * Checks if a moving entity has collided with the platform using its current and last position.
      * This method works well as long as the entity's has non-zero vertical (y) movement.
      * 
      * The method considers a line between the player's current and last position.
@@ -48,7 +48,7 @@ class Platform {
     }
 
     /**
-     * Checks if an entity has collided with the platform using its current and last position.
+     * Checks if a moving entity has collided with the platform using its current and last position.
      * This method works well as long as the entity's has non-zero horizontal (x) movement.
      * 
      * The method considers a line between the player's current and last position.
@@ -73,7 +73,7 @@ class Platform {
     }
 
     /**
-     * Checks if an entity has collided with the platform using its current and last position.
+     * Checks if a moving entity has collided with the platform using its current and last position.
      * (This method assumes that the entity's vertical (y) velocity is 0.)
      * 
      * @param {Vector2D} cPos - The entity's current position.
@@ -88,7 +88,7 @@ class Platform {
     }
 
     /**
-     * Checks if an entity has collided with the platform using its current and last position.
+     * Checks if a moving entity has collided with the platform using its current and last position.
      * (This method assumes that the entity's horizontal (x) velocity is 0.)
      * 
      * @param {Vector2D} cPos - The entity's current position.

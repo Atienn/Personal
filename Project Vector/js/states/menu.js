@@ -7,6 +7,21 @@ let MenuState =
     track: null,
     trackName: "AIRGLOW - Blueshift",
 
+    //Array of subtitles describing the game.
+    descr: [
+        "pretending to have a coherent artistic vision",
+        "speed and making mistakes",
+        "speed and improvement",
+        "trying over and over again",
+        "hopefully finding satisfaction",
+        "muscle memory",
+        "holding down the jump and dash keys",
+        "restarting at the slightest hiccup",
+        "not undestanding how to correctly use colors"
+    ],
+
+    descrIndx: 0,
+
     //Tracks what text should be displayed on the bottom of the screen.
     contextualText: "",
 
@@ -23,20 +38,18 @@ let MenuState =
 
 
     /**
-     * Switch to the menu music, creates the buttons.
+     * Switch to the menu music, creates the buttons, sets 
      */
     setup()
     {
         music.setTrack(this.track, this.trackName);
 
-        //
         this.menuButtons = [
             new StateEntity(new Vector2D(297.5, 375), 300, 50, StateEntity.menuButton, StateEntity.rectCheckHold, this.playSelect, 'PLAY'),
             new StateEntity(new Vector2D(297.5, 500), 300, 50, StateEntity.menuButton, StateEntity.rectCheckHold, this.settingSelect, 'SETTINGS'),
             new StateEntity(new Vector2D(297.5, 625), 300, 50, StateEntity.menuButton, StateEntity.rectCheckHold, this.quitSelect, 'QUIT')
         ];
 
-        //
         this.settingsButtons = [
             new StateEntity(new Vector2D(1265, 635), 70, 15, StateEntity.textButton, StateEntity.rectCheckHold, this.rebindSelect, 'REBIND'),
             new StateEntity(new Vector2D(1270, 482.5), 20, 15, StateEntity.arrowButton, StateEntity.rectCheckHold, this.densityUpSelect, true),
@@ -50,6 +63,13 @@ let MenuState =
             this.levelButtons.unshift(
                 new StateEntity(new Vector2D(1065, 410 + (i * 50)), 275, 17.5, StateEntity.levelButton, StateEntity.rectCheckHold, this.launchLevel, Level.list[i])
             );
+        }
+
+        //Choose the next description (sub-title) to display.
+        this.descrIndx++;
+        //Return to start once having looped through each.
+        if(this.descrIndx >= this.descr.length) {
+            this.descrIndx = 0;
         }
 
         //Send 'hueChange' a quarter further into the spectrum.
@@ -154,7 +174,7 @@ let MenuState =
             text('Controls', 815, 635);
 
             textSize(15);
-            text(`Reccomended values are around 1500 x 750. Modify by zooming in / out.`, 825, 440);
+            text(`Recommended values are around 1500 x 750. Modify by zooming in / out.`, 825, 440);
             text('Affects the sharpness of the image. Lower to increase performance.', 825, 515);
             text('Modifies of how loud all game sounds are.', 825, 590);
             text('Use to re-map game controls.', 825, 665);
@@ -173,7 +193,7 @@ let MenuState =
         //Reduce the text's size.
         textSize(40);
         //Write a subtitle.
-        text("A game about speed and improvement.", 60, 245);
+        text(`A game about ${this.descr[this.descrIndx]}.`, 60, 245);
 
         //Reduce the text size's further
         textSize(30);
@@ -277,69 +297,93 @@ let MenuState =
      */
     rebindSelect() {
         if(mouse.click) {
-
-            //Record the previous update function.
+            //Save the previous update function, it will be re-assigned once input re-binding is done.
             let pastUpdate = MenuState.update;
             //Get all of the game actions whose inputs can be re-mapped.
             let actions = Object.getOwnPropertyNames(settings.input);
+
+            //Tracks which action is being re-binded.
             let keyIndex = 0;
+            //Tracks if a key was pressed last frame.
             let keyDown = false;
+            //Tracks the name of the pressed key.
             let keyName = 'none';
             
-            //Get the name of the key on
+            //Set an event on key press to record the key's name.
             window.onkeydown = (event) => {
                 keyName = event.code;
             }
 
-            //Assign a new one.
+            //Set a new temporary update function.
             MenuState.update = () => {
+                //Calculate the coordinates of the center of the screen (where the re-bind panel will be located).
+                let hWidth = windowWidth / 2;
+                let hHeight = windowHeight / 2;
 
+
+                //DISPLAY
+
+                //Transparent light grey background.
+                //Has the effect of gradually 'greying out' the background by applying a new layer each frame.
                 background(0, 0, 50, 0.1);
 
+                //Save current drawing settings.
                 push();
 
-                //
-                rectMode(CORNERS);
+                //Draw rectangles from the center.
+                rectMode(RADIUS);
+                //Black with thick white outline.
                 fill(0);
                 stroke(100);
                 strokeWeight(5);
 
-                rect(475, 250, 1025, 550);
+                //Draw a rectangular panel at the center of the screen. 
+                rect(hWidth, hHeight, 275, 135);
 
+                //Align text from the center.
                 textAlign(CENTER);
-                noStroke();
+                //White with no stroke.
                 fill(100);
+                noStroke();
 
-
+                //Write the action of to be rebinded in large.
                 textSize(100);
-                text(actions[keyIndex].toUpperCase(), 750, 390);
+                text(actions[keyIndex].toUpperCase(), hWidth, hHeight - 10);
+                //Write the current input for the action as well as instruction to the user.
                 textSize(30);
-                text('Press the desired key for:', 750, 285);
-                text('Current: ' + settings.inputName[actions[keyIndex]], 750, 455);
+                text('Press the desired key for:', hWidth, hHeight - 110);
+                text('Current: ' + settings.inputName[actions[keyIndex]], hWidth, hHeight + 50);
+                //Show the option to skip in small.
                 textSize(20);
-                text(`(Press ESCAPE to skip)`, 750, 525);
+                text(`(Press ESCAPE to skip)`, hWidth, hHeight + 115);
 
+                //Revert to saved drawing settings.
                 pop();
 
+                //If a key is pressed but none were last frame, then re-bind.
                 if(keyIsPressed) {
                     if(!keyDown) {
-
+                        //Prevent a single key press (lasting multiple frames) from re-binding multiple action's inputs. 
                         keyDown = true;
+
+                        //Unless the key pressed is Escape, assign the new key to the action.
+                        //If escape is pressed, the action's re-bind is skipped.
                         if(keyCode != 27) {
                             settingsHandler.modifyInput(actions[keyIndex], keyCode, keyName);
                         }
 
+                        //Moves to the next action.
                         keyIndex++;
-                        if (keyIndex >= actions.length) {
-                            
-                            //Return to the main update function.
-                            MenuState.update = pastUpdate;
 
-                            //Remove the event function.
+                        //If all actions have been re-binded (or skipped), return to the main update
+                        //function and remove the event on key press.
+                        if (keyIndex >= actions.length) {
+                            MenuState.update = pastUpdate;
                             window.onkeydown = null;
                         }
                     }
                 }
+                //Let the next input be recorded if no keys were pressed this frame.
                 else {
                     keyDown = false;
                 }

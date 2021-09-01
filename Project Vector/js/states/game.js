@@ -14,9 +14,6 @@ let GameState =
     //Tracks how long the player takes to complete a level.
     timer: 0,
 
-    //Tracks if the player has restarted recently.
-
-
     //Tracks the reference to the current level being played.
     currLevel: null,
 
@@ -63,7 +60,7 @@ let GameState =
             //Ups the timer by 1.
             this.timer++
 
-            //Check if the player is overlapping an entity and potentially trigger its onOverlap function.
+            //Check if the player is overlapping an entity and potentially trigger its 'event' method.
             Entity.checkAll(Player, Entity.current);
 
             //Update the player's position and react to inputs.
@@ -88,46 +85,46 @@ let GameState =
 
         //BACKGROUND
 
-       background(0);
-
-        //Advance the global hue.
-        misc.changeHue(0.1 + 0.01 * Player.vel.Magnitude());
-
+        //Black background.
+        background(0);
+        //Advance the global hue. Add more relative to the player's velocity.
+        misc.changeHue(0.05 + 0.0025 * Player.vel.Magnitude());
         //If the global dim is over 0, lower it by 1.
         if (dim > 0) { dim--; }
 
-        //Store the current settings.
+
+        //LEVEL
+
+        //Store the current settings to revert to them.
         push();
 
         //Translates everything to be drawn from the player's perspective.
-        camera.translate();
+        camera.translateLevel();
 
+        //Display all backgrounds.
         BGBlock.displayAll();
-
-        //ENTITIES
         //Display all entities.
         Entity.displayAll(Entity.current);
-
-        //PLATFORMS
         //Display all platforms.
         Platform.displayAll();
 
         //Revert the translate.
         pop();
 
+
         //Display the player.
         Player.display();
 
-        //TIMER
+        //OVERLAY
+
         //Display how many frames it has been since the player started in the top-left corner.
         text('TIME: ' + this.timer.toLocaleString(undefined, { minimumIntegerDigits: 5, useGrouping: false }), 5, 15);
 
         //Dev mode
-        text(`POS: (${Player.pos.x.toFixed()}, ${Player.pos.y.toFixed()})`, 5, height - 15);
+        // text(`POS: (${Player.pos.x.toFixed()}, ${Player.pos.y.toFixed()})`, 5, height - 15);
+        // mouse.display();
+        // mouse.displayPos();
 
-        //Dev mode.
-        mouse.display();
-        mouse.displayPos();
 
         //PAUSE MENU
 
@@ -137,39 +134,37 @@ let GameState =
             background(0, 0, 10, 0.4);
 
             //Sets the drawing settings to write text.
-
-            push(); //We don't want to keep these drawing settings.
-            strokeWeight(5); //Gives a thick outline to text.
-            stroke(0, 0, 0); //Set the outline's color to darker grey.
-
-            textSize(120); //Makes the text larger for either of the following message.
-
-
-            //If the level was cleared, display a different message than in regular pause.
-
-            //After clearing the level, display time taken to complete.
+            push(); //These settings won't be kept.
+            
+            //Gives a thick, black outline to text, make text larger.
+            strokeWeight(5); 
+            stroke(0);
+            textSize(120);            
+            
             if (this.cleared) {
-                text('CLEARED', 40, 100); //Display that the level was cleared.
+                //If the level was cleared, display a different message than in regular pause.
+                text('CLEARED', 40, 100);
 
                 textSize(60); //Reduce the text size.
-                text(`You took ${this.timer} frames to complete the level.`, 50, 300); //Display the time it took to clear.
-                text('Press ENTER to return to menu.\nPress R to try again.', 50, 650); //Display instructions to quit/resume at the bottom.
+                //After clearing the level, display time taken to complete.
+                text(`You took ${this.timer} frames to complete the level.`, 50, 300);
+                text('Press ENTER to return to menu.\nPress R to try again.', 50, 650);
             }
-            //On regular pause, display controls and objective.
             else {
-                text('PAUSED', 40, 100); //Display that the game is paused at the top.
+                //On regular pause, display controls and objective.
+                text('PAUSED', 40, 100);
 
-                textSize(60); //Reduce the text size.
-                text('OBJECTIVE', 50, 240); //Display a header in the middle-left.
-                text('Press ENTER to return to menu.\nPress any other key to resume.', 50, 660); //Display instructions to quit/resume at the bottom.
+                textSize(60);
+                text('OBJECTIVE', 50, 240); 
+                text('Press ENTER to return to menu.\nPress any other key to resume.', 50, 660);
 
-                textSize(40); //Reduce the text size again.
+                textSize(40);
                 textAlign(LEFT, TOP);
-                text(this.currLevel.objText, 75, 300); //Display objectives in the middle-left.
+                text(this.currLevel.objText, 75, 300);
             }
             pop(); //Revert to the previous text drawing settings.
 
-            //Display current track.
+            //Display current music track.
             music.displayCurrTrack();
 
             //Display the cursor.
@@ -186,7 +181,7 @@ let GameState =
                     switchState(MenuState);
                 }
                 //If the key isn't ESCAPE or R and the level wasn't cleared, unpause the game.
-                //The first two prevent the paused menu from opening/closing itself over and over if ESCAPE/R are held down.
+                //(The first two prevent the paused menu from opening/closing itself over and over if ESCAPE/R are held down.)
                 else if (keyCode != 27 && keyCode != settings.input.restart && !this.cleared) {
                     //Set the playing state to true.
                     this.playing = true;
@@ -213,10 +208,8 @@ let GameState =
         //Pause the game.
         this.playing = false;
 
-        //Reverts the cleared state if it's true.
+        //Resets the cleared state and timer.
         this.cleared = false;
-
-        //Reset the timer to 0.
         this.timer = 0;
 
         //Reset the player's position.
@@ -235,7 +228,7 @@ let GameState =
         Player.lastStateTimer = 5;
     },
 
-    /** Saves the clear time if necessary. */
+    /** Saves the clear time, if it's the player's best yet. */
     scoreCheck() {
         //If the clear time is lower than the current one of if there isn't any clear time defined, save it.
         if(this.timer < this.currLevel.time || this.cleared.time == null) {
@@ -260,7 +253,7 @@ let GameState =
         //Array of background blocks.
         BGBlock.current = null;
 
-        //Global dim.
+        //Reset global dim.
         dim = 0;
     }
 }

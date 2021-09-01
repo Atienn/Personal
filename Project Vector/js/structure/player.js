@@ -29,6 +29,8 @@ let Player =
 
     //Tracks which side the player is facing (false: left, true: right)
     oritentation: false,
+    //For display only. Tracks the rotation of the inner triangle.
+    rotation: 0,
 
     /**
     * Handles everything related to the player's movement.
@@ -73,7 +75,7 @@ let Player =
 
         //Since after the first collision any further ones won't have any effect (for one frame),
         //then we don't have to calculate if any more collisons has happened.
-        horizontalCheck:
+        verticalCheck:
         {
             //Only check for ground collisions if the player is moving down.
             if(this.vel.y > 0)
@@ -84,8 +86,8 @@ let Player =
                 let lastPosBL = new Vector2D(this.lastPos.x - 10, this.lastPos.y + 10);
                 let lastPosBR = new Vector2D(this.lastPos.x + 10, this.lastPos.y + 10);
 
-                //If the horizotal velocity is 0, then the collision check process can be simplified.
-                if(this.pos.x - this.lastPos.x === 0) {
+                //If the net horizotal velocity is 0 (or close to it), then the collision check process can be simplified.
+                if(Math.abs(this.pos.x - this.lastPos.x) < 0.001) {
                     //For every ground, check if there is collision.
                     for(let i = 0; i < Platform.currG.length; i++)
                     {
@@ -95,11 +97,11 @@ let Player =
                             Platform.currG[i].colCheckYSimple(currPosBR, lastPosBR, this.vel) )
                         {
                             //Call the collision event with the platform that triggered it.
-                            this.onGCol(Platform.currG[i].pos);
+                            this.onGColl(Platform.currG[i].pos);
 
                             //If a collision has happened, then any other ones won't change anything (for this frame).
                             //Stops the collision check for horizontal platforms on this frame.
-                            break horizontalCheck;
+                            break verticalCheck;
                         }
                     }
                 }
@@ -113,11 +115,11 @@ let Player =
                             Platform.currG[i].collisionCheckY(currPosBR, lastPosBR, this.vel) )
                         {
                             //Call the collision event with the platform that triggered it.
-                            this.onGCol(Platform.currG[i].pos);
+                            this.onGColl(Platform.currG[i].pos);
 
                             //If a collision has happened, then any other ones won't change anything (for this frame).
                             //Stops the collision check for horizontal platforms on this frame.
-                            break horizontalCheck;
+                            break verticalCheck;
                         }
                     }
                 }
@@ -130,9 +132,9 @@ let Player =
                 let currPosTR = new Vector2D(this.pos.x + 10, this.pos.y - 10);
                 let lastPosTL = new Vector2D(this.lastPos.x - 10, this.lastPos.y - 10);
                 let lastPosTR = new Vector2D(this.lastPos.x + 10, this.lastPos.y - 10);
-
-                //If the horizotal velocity is 0, then the collision check process can be simplified.
-                if(this.pos.x - this.lastPos.x === 0) {
+                
+                //If the net horizotal velocity is 0 (or close to it), then the collision check process can be simplified.
+                if(Math.abs(this.pos.x - this.lastPos.x) < 0.001) {
                     //For every ceiling, check if there is collision.
                     for(let i = 0; i < Platform.currC.length; i++)
                     {
@@ -142,11 +144,11 @@ let Player =
                             Platform.currC[i].colCheckYSimple(currPosTR, lastPosTR, this.vel) )
                         {
                             //Call the collision event with the platform that triggered it.
-                            this.onTCol(Platform.currC[i].pos);
+                            this.onTColl(Platform.currC[i].pos);
 
                             //If a collision has happened, then any other ones won't change anything (for this frame).
                             //Stops the collision check for horizontal platforms until next frame.
-                            break horizontalCheck;
+                            break verticalCheck;
                         }
                     } 
                 }
@@ -160,11 +162,11 @@ let Player =
                             Platform.currC[i].collisionCheckY(currPosTR, lastPosTR, this.vel) )
                         {
                             //Call the collision event with the platform that triggered it.
-                            this.onTCol(Platform.currC[i].pos);
+                            this.onTColl(Platform.currC[i].pos);
 
                             //If a collision has happened, then any other ones won't change anything (for this frame).
                             //Stops the collision check for horizontal platforms until next frame.
-                            break horizontalCheck;
+                            break verticalCheck;
                         }
                     } 
                 }
@@ -175,7 +177,7 @@ let Player =
         //Since after a first collision any further ones won't have any effect (for a single frame),
         //then we don't have to any more collisons one one has happened.
         //Sections the vertical collision check process for horizontal platforms so that it can be halted mid-process.
-        verticalCheck:
+        horizontalCheck:
         {
             //Only check for right wall collisions if the player is moving left.
             if(this.vel.x > 0)
@@ -186,8 +188,8 @@ let Player =
                 let lastPosRT = new Vector2D(this.lastPos.x + 10, this.lastPos.y - 10);
                 let lastPosRB = new Vector2D(this.lastPos.x + 10, this.lastPos.y + 10);
 
-                //If the vertical velocity is 0, then the collision check process can be simplified.
-                if(this.pos.y - this.lastPos.y === 0) {
+                //If the net vertical velocity is 0 (or clost to it), then the collision check process can be simplified.
+                if(Math.abs(this.pos.y - this.lastPos.y) < 0.001) {
                     //For every right wall, check if there is collision.
                     for(let i = 0; i < Platform.currR.length; i++)
                     {
@@ -197,11 +199,11 @@ let Player =
                             Platform.currR[i].colCheckXSimple(currPosRB, lastPosRB) )
                         {
                             //Call the collision event with the platform that triggered it.
-                            this.onRCol(Platform.currR[i].pos);
+                            this.onRColl(Platform.currR[i].pos);
 
                             //If a collision has happened, then any other ones won't change anything (for this frame).
                             //Stops the collision check for horizontal platforms until next frame.
-                            break verticalCheck;
+                            break horizontalCheck;
                         }
                     }
                 }
@@ -215,11 +217,11 @@ let Player =
                             Platform.currR[i].collisionCheckX(currPosRB, lastPosRB) )
                         {
                             //Call the collision event with the platform that triggered it.
-                            this.onRCol(Platform.currR[i].pos);
+                            this.onRColl(Platform.currR[i].pos);
 
                             //If a collision has happened, then any other ones won't change anything (for this frame).
                             //Stops the collision check for horizontal platforms until next frame.
-                            break verticalCheck;
+                            break horizontalCheck;
                         }
                     }
                 }
@@ -234,8 +236,8 @@ let Player =
                 let lastPosLT = new Vector2D(this.lastPos.x - 10, this.lastPos.y - 10);
                 let lastPosLB = new Vector2D(this.lastPos.x - 10, this.lastPos.y + 10);
 
-                //If the vertical velocity is 0, then the collision check process can be simplified.
-                if(this.pos.y - this.lastPos.y === 0) {
+                //If the net vertical velocity is 0 (or close to it), then the collision check process can be simplified.
+                if(Math.abs(this.pos.y - this.lastPos.y) < 0.001) {
                     //For every left wall, check if there is collision.
                     for(let i = 0; i < Platform.currL.length; i++)
                     {
@@ -245,11 +247,11 @@ let Player =
                             Platform.currL[i].colCheckXSimple(currPosLB, lastPosLB) )
                         {
                             //Call the collision event with the platform that triggered it.
-                            this.onLCol(Platform.currL[i].pos);
+                            this.onLColl(Platform.currL[i].pos);
 
                             //If a collision has happened, then any other ones won't change anything (for this frame).
                             //Stops the collision check for horizontal platforms until next frame.
-                            break verticalCheck;
+                            break horizontalCheck;
                         }
                     }
                 }
@@ -263,11 +265,11 @@ let Player =
                             Platform.currL[i].collisionCheckX(currPosLB, lastPosLB) )
                         {
                             //Call the collision event with the platform that triggered it.
-                            this.onLCol(Platform.currL[i].pos);
+                            this.onLColl(Platform.currL[i].pos);
 
                             //If a collision has happened, then any other ones won't change anything (for this frame).
                             //Stops the collision check for horizontal platforms until next frame.
-                            break verticalCheck;
+                            break horizontalCheck;
                         }
                     }
                 }
@@ -397,7 +399,7 @@ let Player =
             //Puts some time before the dash can be used again.
             this.dashTimer = 25;
 
-            //Add roughly 71 (magnitude) times the desired direction as velocity to the player.
+            //Set roughly 71 (magnitude) times the desired direction as velocity to the player.
             this.vel.x = 40 * this.dir.x;
             this.vel.y = 40 * this.dir.y - 10; //The -10 makes it so that horizontal dashes have a bit of 'lift'.
 
@@ -429,31 +431,61 @@ let Player =
     display() {
         push(); //We don't want to keep these drawing settings.
 
+        //Translate to view from the player's perspective.
+        camera.translateTarget();
+
         //Makes the stroke white, its thickness dependent on the amplitude level.
-        strokeWeight(2 + music.ampCurrent * 5);
+        strokeWeight(2 + music.ampCurrent * 3);
+        //Draw a half transparent circle on the player's last position.
+        stroke(0,0,100,0.4);
+        fill(0,0,0,0.4);
+        circle(this.lastPos.x-this.pos.x, this.lastPos.y-this.pos.y, 10);
+
         stroke(100);
 
         //Make the player circle's fill dependent on the dash cooldown. Also add 40 to the brightness
         //if the dashTimer is over 0 to have a more noticeable switch when the dash is avaiable again.
-        fill(0 + 2 * Player.dashTimer + 40 * (Player.dashTimer > 0));
+        fill(0 + Player.dashTimer + 60 * (Player.dashTimer > 0));
 
         //Draw the player circle around the center of the screen (affected by the camera offset).
-        circle((width / 2) - camera.offset.x, (height / 1.5) - camera.offset.y, 10);
+        circle(0, 0, 10);
 
+        //White fill that is only visible (not transparent) if the player doesn't have their dash.
+        fill(0,0,100, 1* !Player.dash);
+
+        if(this.state) {
+            //If the player is against a surface, roll the inner triangle against where they are facing. 
+            //The rotation rate is representitive of velocity. Higher velocity means faster rotation.
+            this.rotation += this.oritentation ? -0.025 + -0.005 * this.vel.x : 0.025 + -0.005 * this.vel.x;
+        }
+        else {
+            //If the player is mid-air, roll the inner triangle towards where they are facing at a rate affected by velocity.
+            //The rotation rate is representitive of velocity. Higher velocity means faster rotation.
+            this.rotation += this.oritentation ? 0.1 + 0.0025 * this.vel.Magnitude() : -0.1 - 0.0025 * this.vel.Magnitude();
+        }
+        //Orient and draw the inner triangle.
+        rotate(this.rotation);
+        triangle(0, -7.5, 6.45, 3.75, -6.45, 3.75);
+        
         //Revert to the previous drawing settings.
         pop();
     },
+
+    /*
+        rotate(Math.atan2(this.vel.y, this.vel.x) + HALF_PI);
+        triangle(0, 7.5, 1.45, 3.75, -1.45, 3.75);
+    */
 
 
 
     //#region Collision events
 
     /** Event to execute when the player collides with a ground platform. */
-    onGCol(platformPos) {
+    onGColl(platformPos) {
         //Anchor the player to the ground.
         this.pos.y = platformPos - 10;
         //Remove any vertical velocity.
-        this.vel.y = 0.1;
+        this.vel.y = 0.01;
         //Switch the player's state and last state to grounded.
         this.state = 1;
         this.lastState = 1;
@@ -464,7 +496,7 @@ let Player =
     },
 
     /** Event to execute when the player collides with a ceilling platform. */
-    onTCol(platformPos) {
+    onTColl(platformPos) {
         //Bring the player back to where they collided with the ceiling.
         this.pos.y = platformPos + 10;
         //Remove and vertical velocity.
@@ -472,7 +504,7 @@ let Player =
     },
 
     /** Event to execute when the player collides with a left wall platform. */
-    onLCol(platformPos) {
+    onLColl(platformPos) {
         //Anchor the player to the wall.
         this.pos.x = platformPos + 10;
         //Keep the player on the wall with a small velocity to the left.
@@ -494,7 +526,7 @@ let Player =
     },
 
     /** Event to execute when the player collides with a right wall platform. */
-    onRCol(platformPos) {
+    onRColl(platformPos) {
         //Anchor the player to the wall.
         this.pos.x = platformPos - 10;
         //Keep the player on the wall with a small velocity to the right.

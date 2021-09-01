@@ -11,13 +11,12 @@ class Entity {
      * Runs its 'event' function if 'check' returns true.
      * 
      * @param {Vector2D} position - The position (x, y) of the entity.
-     * @param {Number} width - The widrh (x) of the entity's collider.
+     * @param {Number} width - The width (x) of the entity's collider.
      * @param {Number} height - (Optional) The height (y) of the entity's collider. Defaults to width.
      * @param {Function} display - (Optional) The function used to display the entity.
      * @param {Function} check - The function to check every frame to determine if the entity event should trigger. Ex: check if a given position overlaps this entity's 'collider'.
-     * @param {Function} event - The function to run if there is overlap.
-     * @param {any} modifier - (Optional) The value to specify the exact behaviour of the entity. Ex: the speed to add or the text to display.
-     * The type of this value is assumed to match what the entity type expects it to be.
+     * @param {Function} event - The function to run if 'check' returns true.
+     * @param {any} modifier - (Optional) The value to specify the exact behaviour of the entity. (Ex: the speed to add or the text to display.) The type of this value is assumed to match what the entity type expects it to be.
 
      */
     constructor(position, width, height = width, display, check, event, modifier = null) {
@@ -156,6 +155,56 @@ class Entity {
         triangle(this.pos.x - this.w / 2, base, this.pos.x + this.w / 2, base, this.pos.x, base - (this.h + music.ampCurrent*10) * 1.5);
     }
 
+    /** Displays two red triangles pointing down, one wider, one taller. */
+    static redTrianglesD() {
+        //Black outline.
+        stroke(0);
+        strokeWeight(2);
+        //Bright red fill.
+        fill(0, 100, 100);
+
+        let base = this.pos.y - this.h;
+
+        //Wide triangle. Beats to the music.
+        triangle(this.pos.x - this.w, base, this.pos.x + this.w, base, this.pos.x, base + (this.h + music.ampCurrent*10));
+        //Tall triangle. Beats to the music.
+        triangle(this.pos.x - this.w / 2, base, this.pos.x + this.w / 2, base, this.pos.x, base + (this.h + music.ampCurrent*10) * 1.5);
+    }
+
+    /** Displays two red triangles pointing left, one wider, one taller. */
+    static redTrianglesL() {
+        //Black outline.
+        stroke(0);
+        strokeWeight(2);
+        //Bright red fill.
+        fill(0, 100, 100);
+
+        let base = this.pos.x + this.w;
+
+        //Wide triangle. Beats to the music.
+        triangle(base, this.pos.y - this.h, base, this.pos.y + this.h, base - (this.w + music.ampCurrent*10), this.pos.y);
+        //Tall triangle. Beats to the music.
+        triangle(base, this.pos.y - this.h / 2, base, this.pos.y + this.h / 2, base - (this.w + music.ampCurrent*10) * 1.5, this.pos.y);
+    }
+
+    /** Displays two red triangles pointing right, one wider, one taller. */
+    static redTrianglesR() {
+        //Black outline.
+        stroke(0);
+        strokeWeight(2);
+        //Bright red fill.
+        fill(0, 100, 100);
+
+        let base = this.pos.x - this.w;
+
+        //Wide triangle. Beats to the music.
+        triangle(base, this.pos.y - this.h, base, this.pos.y + this.h, base + (this.w + music.ampCurrent*10), this.pos.y);
+        //Tall triangle. Beats to the music.
+        triangle(base, this.pos.y - this.h / 2, base, this.pos.y + this.h / 2, base + (this.w + music.ampCurrent*10) * 1.5, this.pos.y);
+    }
+
+
+
     /** Displays an orange rectangle with a shaded lower part. */
     static orangeRects() {
         //Black outline.
@@ -172,7 +221,7 @@ class Entity {
         //Darker orange (brownish).
         fill(30, 100, 75);
         //Shade rectangle.
-        rect(this.pos.x, this.pos.y + this.h * 0.5, this.w, this.h * 0.5);
+        rect(this.pos.x, this.pos.y + this.h * 0.5, this.w - 1, this.h * 0.5);
     }
 
     /** Displays stacking cyan rectangles of decreasing width and increasing brightness. */
@@ -198,7 +247,7 @@ class Entity {
     }
 
     /** Draws white text within an invisible box. */
-    static whiteTextBox() {
+    static textBox() {
         //Black outline (for the text).
         stroke(0);
         strokeWeight(2);
@@ -214,10 +263,15 @@ class Entity {
         text(this.mod, this.pos.x, this.pos.y, this.w * 2, this.h * 2);
     }
 
+
+
+//TO TRY
+//Couldn't you just rely on object reference to track your changes?
+
     /** 
      * Draws white text within a text box.
      * Works just like whiteTextBox(), but calls a method to get
-     * the text to display as to be able to track changes.
+     * the text to display as to be able to track changes. 
      */
     static dynamicTextBox() {
         //Black outline.
@@ -449,8 +503,8 @@ class StateEntity extends Entity {
 
         //Bright green fill (dimmer if active).
         fill(120, 100, this.state ? 50 : 100);
-        //Square with rounded corners.
-        square(this.pos.x, this.pos.y, this.w * 0.5, this.w * 0.25);
+        //Square with rounded corners, beats to the music.
+        square(this.pos.x, this.pos.y, this.w * 0.5 - music.ampCurrent * 5, this.w * 0.25);
     }
 
     /**

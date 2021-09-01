@@ -31,10 +31,10 @@ let mouse = {
     },
 
     //Dev mode.
-    displayPos() {
-        let worldPos = new Vector2D(this.pos.x - ((width/2) - Player.pos.x - camera.offset.x), this.pos.y - ((height/1.5) - Player.pos.y - camera.offset.y));
-        text(worldPos.toString(), this.pos.x + 15, this.pos.y + 15);
-    }
+    // displayPos() {
+    //     let worldPos = new Vector2D(this.pos.x - ((width/2) - Player.pos.x - camera.offset.x), this.pos.y - ((height/1.5) - Player.pos.y - camera.offset.y));
+    //     text(worldPos.toString(), this.pos.x + 15, this.pos.y + 15);
+    // }
 }
 
 /** Handles where entities, platforms and the player are drawn on screen. */
@@ -48,7 +48,12 @@ let camera = {
     offset: Vector2D.Zero(),
 
     /** Translates everything to be drawn from the target's perspective. */
-    translate() {
+    translateTarget(){
+        translate((width/2) - this.offset.x, (height/1.5) - this.offset.y);
+    },
+
+    /** Translates everything to be drawn relative to the target target's perspective. */
+    translateLevel() {
         translate((width/2) - this.target.pos.x - this.offset.x, (height/1.5) - this.target.pos.y - this.offset.y);
     }
 }
@@ -93,21 +98,37 @@ function preload()
         level.track = music.loadTrack(level.trackName);
     });
 
-    //Get locally stored settings data if any is available.
-    settings = JSON.parse(localStorage.getItem(`P1:Settings`));
-    //If said data doesn't exist yet, create a new settings object with default values.
-    if(!settings) { settingsHandler.resetSettings(); }
 
-    //Get the clear time array from storage.
-    let scores = JSON.parse(localStorage.getItem("P1:Scores"));
-    //If defined, set each level's clear time as the one specified in storage.
-    if(scores != undefined) {
-        for (let i = 0; i < scores.length; i++) {
-            Level.list[i].time = scores[i];
-        }
+    //Since both of the following rely on data stored on the user's system,
+    //extra precaution measures should be taken.
+
+    try {
+        //Get locally stored settings data if any is available.
+        settings = JSON.parse(localStorage.getItem(`P1:Settings`));
+        //If said data doesn't exist yet, create a new settings object with default values.
+        if(!settings) { settingsHandler.resetSettings(); }
     }
-    //If undefined, reset the array.
-    else {
+    //If parsing of the settings JSON object fails, reset to default values.
+    catch (err) {
+        console.warn('Unable to parse settings in local storage. Resetting to default.');
+        settingsHandler.resetSettings();
+    }
+
+    try {
+        //Get the clear time array from storage.
+        let scores = JSON.parse(localStorage.getItem("P1:Scores"));
+        //If defined, set each level's clear time as the one specified in storage.
+        if(scores != undefined) {
+            for (let i = 0; i < scores.length; i++) {
+                Level.list[i].time = scores[i];
+            }
+        }
+        //If undefined, reset the array.
+        else { scoreHandler.resetScores(); }
+    }
+    //If parsing of the scores JSON object fails, reset to default values.
+    catch (err) {
+        console.warn('Unable to parse level highscores in local storage. Resetting to default.');
         scoreHandler.resetScores();
     }
 }
@@ -122,7 +143,11 @@ function setup()
     createCanvas(windowWidth, windowHeight);
 
     //#region Display Settings
-  
+
+    //Tries to set the game's framerate at 60 per second (affects the speed of the game).
+    //If the refresh rate of the user's screen is below this however, browsers will not go above what can be shown.
+    frameRate(60);
+
     noCursor(); //Hides the cursor as a custom one provided.
     colorMode(HSB); //HSB is useful as the saturation and brightness can be modified independently of hue.
 
