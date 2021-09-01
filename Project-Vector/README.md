@@ -4,7 +4,7 @@ Built off [template-p5-project](https://github.com/pippinbarr/cart253/tree/maste
 
 This is a platformer game with a focus on speed. The goal is to navigate levels in the shortest amount of time possible.
 
-Play it [here](https://atienn.github.io/CART-263/Project%20Vector/).
+Play it [here](https://atienn.github.io/Personal/Project-Vector/).
 
 
 
