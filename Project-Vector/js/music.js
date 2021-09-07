@@ -37,7 +37,7 @@ let music = {
      * @param trackName {String} - The name of the track.
      */
     setTrack(track, trackName) {
-        //Unlocks the analyzers from 'currentMusic' as it's switching track.
+        //Unlocks the analyzers as they're switching track.
         //Not doing so causes the analyzers to stop working entirely.
         this.freqAnalyzer.setInput();
         this.ampAnalyzer.setInput();

@@ -73,9 +73,6 @@ let hueChange = 140;
 //Used as a global value to dim the colors of various objects.
 let dim =  0;
 
-//Holds the music currently playing.
-let currentMusic;
-
 //#endregion
 
 
