@@ -541,7 +541,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "<size=150%><b>Disclaimer:</b></size>\n\nThis simulation is far from perfect.
-    \n\nIt ignores collisions an is not built to scale. \n\nThe volume of bodies
+    \n\nIt ignores collisions and is not built to scale. \n\nThe volume of bodies
     is not considered. Instead, they are treated as single-point masses to simplify
     calculations. \n\nMoreover, due to the limited refresh rate, the accuracy of
     gravitational interactions breaks down when bodies pass very close to one another.\n"
@@ -1837,7 +1837,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 57.3
+  m_fontSize: 57.25
   m_fontSizeBase: 65
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2279,7 +2279,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 57.3
+  m_fontSize: 57.25
   m_fontSizeBase: 65
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7821,7 +7821,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 57.3
+  m_fontSize: 57.25
   m_fontSizeBase: 65
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7977,7 +7977,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 57.3
+  m_fontSize: 57.25
   m_fontSizeBase: 65
   m_fontWeight: 400
   m_enableAutoSizing: 1

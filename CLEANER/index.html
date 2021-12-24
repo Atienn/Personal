@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link res="icon" href=""/>
+
+  <title>CLEANER</title>
+
+  <!-- CSS stylesheet(s) -->
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+
+  <!-- Library scripts -->
+  <script src=js/libraries/p5.min.js></script>
+  <script src=js/libraries/p5.sound.min.js></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+
+  <!-- Custom scripts -->
+  <script src=js/driver.js></script>
+  <script src=js/imageHandler.js></script>
+  <script src=js/gameHandler.js></script>
+</head>
+
+<body>
+  <div id=col>
+    <header id="top"></header>
+    <div id="row">
+      <div class="side" style="margin-right: 10px;">
+        <div id="left-content">
+          <span style="font-size: 125%;">TO DELETE</span><hr/>
+          <!-- Game script write in here. -->
+          <span id="tag-list"></span>
+        </div>
+      </div>
+      <div id="center"></div>
+      <div class="side" style="margin-left: 10px;">
+        <button type="button" class="green-button" onclick="game.userCall('ignore');"><b>ignore</b></button>
+        <button type="button" class="red-button" onclick="game.userCall('delete');"><b>delete</b></button>
+      </div>
+    </div>
+  </div>
+  <footer id="output"></footer>
+</body>
+
+</html>

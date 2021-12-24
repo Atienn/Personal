@@ -1,0 +1,55 @@
+{
+    "abstract": 
+    [
+        "time",
+        "cold",
+        "dark",
+        "busy",
+        "dread",
+        "dry",
+        "hard",
+        "return",
+        "this",
+        "erase",
+        "poor",
+        "success",
+        "failure",
+        "learn",
+        "inspirational",
+        "slow"
+    ],
+
+    "concrete":
+    [
+        "guitar",
+        "drum",
+        "saxophone",
+        "harmonica",
+        "violin",
+        "piano",
+        "trumpet",
+        "clarinet",
+        "banjo",
+        "ukelele",
+
+        "cat",
+        "dog",
+        "duck",
+        "parrot",
+        "owl",
+        "squirrel",
+        "hamster",
+        "snail",
+        "cheetah",
+        "elephant",
+        "bee",
+
+        "automobile",
+        "motorcycle",
+        "boat",
+        "jet",
+        "helicopter",
+        "shuttle bus",
+        "subway train"
+    ]
+}
