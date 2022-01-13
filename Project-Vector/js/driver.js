@@ -86,7 +86,8 @@ p5.disableFriendlyErrors = true;
  */
 function preload()
 {
-    console.log(`Ignore the "TypeError: Cannot read properties of undefined at RingBuffer.push" errors.\n\nThey are thrown automatically by P5.js when .mp3 files are played even if everything works fine.`);
+    console.log(`The game can be pretty slow to load, sometimes over 30 seconds.\n\nUnless there is some major error, just give it time.`);
+    console.log(`Ignore the "TypeError: Cannot read properties of undefined at RingBuffer.push" errors.\n\nThey are thrown by P5.js when .mp3 files are played even if everything works.`);
 
 
     //Since loading a sound file is asynchronous, placing it in 'preload()' prevents the program from continuing until it's done.
