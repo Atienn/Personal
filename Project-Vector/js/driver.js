@@ -86,7 +86,7 @@ p5.disableFriendlyErrors = true;
  */
 function preload()
 {
-    console.log(`The game can be pretty slow to load, sometimes over 30 seconds.\n\nUnless there is some major error, just give it time.`);
+    console.log(`The game can be pretty slow to load, sometimes over 30 seconds.\nUnless there is some major error, just give it time.`);
     console.log(`Ignore the "TypeError: Cannot read properties of undefined at RingBuffer.push" errors.\n\nThey are thrown by P5.js when .mp3 files are played even if everything works.`);
 
 
